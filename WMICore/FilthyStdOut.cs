@@ -141,7 +141,6 @@ namespace WMICore
                                     else
                                     {
                                         strOut.AppendLine(outParams2.Properties["sValue"].Value.ToString());
-                                        Console.WriteLine(outParams2.Properties["sValue"].Value.ToString());
                                     }
                                 }
                                 else
