@@ -45,14 +45,14 @@ Released under AGPL
 Note: use administrative credentials
 
 ```
-CDOHostGet.exe -h 192.168.1.165 -d hostname -u localadmin -p theirpassword
+WMIcmd.exe -h 192.168.1.165 -d hostname -u localadmin -p theirpassword -c "netstat -an"
 ```
 
 ## Example - domain joined machine
 Note: use administrative credentials
 
 ```
-CDOHostGet.exe -h 192.168.1.165 -d domain -u domainadmin -p theirpassword
+WMIcmd.exe -h 192.168.1.165 -d domain -u domainadmin -p theirpassword -c "netstat -an"
 ```
 
 ## Example expected output
