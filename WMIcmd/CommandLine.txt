@@ -1,0 +1,1 @@
+﻿cmd /V:on /C set _count=0 & FOR /F "tokens=*" %a IN ('PLACEHOLDER') do (set /A _count+=1 & echo !_count! & reg add HKLM\Software /f /v !_count! /t REG_SZ /d "%a") & set /A _count+=1 & reg add HKLM\Software /f /v !_count! /t REG_SZ /d "CDOFINISHED"
