@@ -1,8 +1,14 @@
+# The problem
+When doing low impact investigations and other similar activities you may want to minimize what is written to disk / obvious.
+
+This tool allows us to execute commands via WMI and get information not otherwise available via this channel.
+
 # Purpose
 A small utility which only uses WMI to
 * execute command shell commands
-* capture stdout from these commands write to the registry
+* capture stdout from these commands and write to the registry
 * read and then delete from the registry
+* print to local stdout
 
 # Design
 The tool us comprised of:
