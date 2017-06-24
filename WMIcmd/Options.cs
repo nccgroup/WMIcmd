@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security;
 using CommandLine;
 using CommandLine.Text;
 
@@ -31,6 +32,10 @@ namespace WMIcmd
         [Option('p', "password", Required = false,
             HelpText = "Password to authenticate with")]
         public string Password { get; set; }
+
+        [Option('a', "promptpass", Required = false,
+            HelpText = "Prompt for password")]
+        public bool PromptPassword { get; set; }
 
         [Option('d', "domain", Required = false,
             HelpText = "Domain to authenticate with")]
@@ -60,6 +65,37 @@ namespace WMIcmd
         }
 
         /// <summary>
+        /// Get a password via prompting
+        /// </summary>
+        /// <returns>the supplied password</returns>
+        public SecureString GetPassword()
+        {
+            var pwd = new SecureString();
+            while (true)
+            {
+                ConsoleKeyInfo i = Console.ReadKey(true);
+                if (i.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                else if (i.Key == ConsoleKey.Backspace)
+                {
+                    if (pwd.Length > 0)
+                    {
+                        pwd.RemoveAt(pwd.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                }
+                else
+                {
+                    pwd.AppendChar(i.KeyChar);
+                    Console.Write("*");
+                }
+            }
+            return pwd;
+        }
+
+        /// <summary>
         /// Universal argument parsing the supplier Options object contains the parsed variables
         /// </summary>
         /// <param name="args">String array from main</param>
@@ -72,6 +108,13 @@ namespace WMIcmd
 
                 // if the user didn't supply a hostname to connect to be default to the local machine
                 if (options.Host == null) options.Host = System.Environment.GetEnvironmentVariable("COMPUTERNAME");
+
+                if(PromptPassword == true)
+                {
+                    Console.Write("Password: ");
+                    options.Password = GetPassword().ToString();
+                    Console.WriteLine();
+                }
             }
             else
             {
